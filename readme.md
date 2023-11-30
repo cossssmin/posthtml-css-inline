@@ -93,6 +93,7 @@ Here are all available options, with their default values:
 {
   preserveImportant: false,
   removeEmptyStyleTags: true,
+  removeInlinedSelectors: true,
 }
 ```
 
@@ -170,6 +171,48 @@ Result:
 
 ```html
 <style></style>
+
+<p class="text-sm" style="font-size: 12px">small text</p>
+```
+
+### `removeInlinedSelectors`
+
+Type: `boolean`\
+Default: `true`
+
+Whether to remove selectors that were successfully inlined from the `<style>` tag.
+
+Set this to `false` if you want to keep the original CSS in the `<style>` tag.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-inline-css'
+
+posthtml([
+  inlineCss({
+    removeInlinedSelectors: false
+  })
+])
+  .process(`
+    <style>
+      .text-sm {
+        font-size: 12px;
+      }
+    </style>
+
+    <p class="text-sm">small text</p>
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<style>
+  .text-sm {
+    font-size: 12px;
+  }
+</style>
 
 <p class="text-sm" style="font-size: 12px">small text</p>
 ```
