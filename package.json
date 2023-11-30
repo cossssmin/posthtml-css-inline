@@ -1,0 +1,39 @@
+{
+  "name": "posthtml-plugin-starter",
+  "description": "PostHTML plugin starter kit.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "PostHTML (https://github.com/posthtml)",
+  "bugs": "https://github.com/posthtml/posthtml-plugin-starter/issues",
+  "homepage": "https://github.com/posthtml/posthtml-plugin-starter",
+  "repository": "posthtml/posthtml-plugin-starter",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "c8 ava",
+    "pretest": "xo",
+    "release": "np"
+  },
+  "keywords": [
+    "html",
+    "posthtml",
+    "posthtml-plugin"
+  ],
+  "devDependencies": {
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "np": "^8.0.4",
+    "posthtml": "^0.16.5",
+    "xo": "^0.54.2"
+  },
+  "dependencies": {
+    "postcss": "^8.4.31",
+    "postcss-safe-parser": "^7.0.0",
+    "posthtml-attrs-parser": "^0.1.1",
+    "posthtml-match-helper": "^1.0.3",
+    "specificity": "^1.0.0"
+  }
+}
