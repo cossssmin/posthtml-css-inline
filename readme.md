@@ -90,10 +90,50 @@ Here are all available options, with their default values:
 
 ```js
 {
+  processLinkTags: false,
   preserveImportant: false,
   removeEmptyStyleTags: true,
   removeInlinedSelectors: true,
 }
+```
+
+### `processLinkTags`
+
+Type: `boolean`\
+Default: `false`
+
+Whether to process `<link rel="stylesheet">` tags.
+
+The plugin will fetch the CSS from the URL in the `href` attribute, and replace the `<link>` tag with a `<style>` tag containing the CSS. This `<style>` tag will then be inlined into the HTML.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-inline-css'
+
+posthtml([
+  inlineCss({
+    processLinkTags: true
+  })
+])
+  .process(`
+    <link rel="stylesheet" href="public/styles.css">
+
+    <p class="text-sm">small text</p>
+  `)
+  .then(result => result.html)
+```
+
+```css
+/* public/styles.css */
+.text-sm {
+  font-size: 12px;
+}
+```
+
+Result:
+
+```html
+<p class="text-sm" style="font-size: 12px">small text</p>
 ```
 
 ### `preserveImportant`
@@ -130,7 +170,7 @@ posthtml([
   .then(result => result.html)
 ```
 
-Result:
+... will output this:
 
 ```html
 <p class="text-sm" style="font-size: 14px !important">small text</p>
