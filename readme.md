@@ -18,7 +18,8 @@ TODO:
 - [x] Support `<link rel="stylesheet">` tags
 - [ ] Support `@import` rules?
 - [ ] Remove inlined classes from HTML elements?
-- Juice-compatible API
+- [ ] Support PostCSS plugins
+- Juice-compatible options
   - [ ] `resolveCSSVariables`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
