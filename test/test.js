@@ -26,7 +26,7 @@ test('Plugin options', t => {
 })
 
 test('Inlines <style> in <head>', t => {
-  return process(t, 'basic')
+  return process(t, 'style-in-head')
 })
 
 test('Inlines <style> in <body>', t => {
@@ -39,4 +39,8 @@ test('Preserves at-rules', t => {
 
 test('Preserves inlined selectors', t => {
   return process(t, 'preserve-inlined', {removeInlinedSelectors: false})
+})
+
+test('Works with existing inline styles', t => {
+  return process(t, 'existing-style-attr')
 })
