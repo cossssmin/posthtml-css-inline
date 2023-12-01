@@ -1,0 +1,15 @@
+.text-sm {
+  font-size: 12px;
+}
+
+.text-blue {
+  color: blue;
+}
+
+div {
+  display: flex;
+}
+
+div {
+  font-size: 14px !important;
+}

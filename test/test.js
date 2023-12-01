@@ -25,12 +25,25 @@ test('Plugin options', t => {
   return process(t, 'options', {preserveImportant: true, posthtml: {recognizeNoValueAttribute: true}})
 })
 
-test('Inlines <style> in <head>', t => {
+test('<style> in <head>', t => {
   return process(t, 'style-in-head')
 })
 
-test('Inlines <style> in <body>', t => {
+test('<style> in <body>', t => {
   return process(t, 'style-in-body')
+})
+
+test('Local <link> tags', t => {
+  return process(t, 'link-local', {processLinkTags: true})
+})
+
+test('Remote <link> tags', t => {
+  return process(t, 'link-remote', {processLinkTags: true})
+})
+
+test('Remote <link> tags (fail)', async t => {
+  const error = await t.throwsAsync(process(t, 'link-remote-reject', {processLinkTags: true}))
+  t.is(error.name, 'FetchError')
 })
 
 test('Preserves at-rules', t => {

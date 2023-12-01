@@ -15,15 +15,14 @@ This is a work in progress. It's not ready for production and has not been publi
 
 TODO:
 
-- [ ] Support `<link rel="stylesheet">` tags
+- [x] Support `<link rel="stylesheet">` tags
 - [ ] Support `@import` rules?
 - [ ] Remove inlined classes from HTML elements?
 - Juice-compatible API
   - [ ] `resolveCSSVariables`
-  - [ ] `applyStyleTags`
-  - [ ] `applyAttributesTableElements`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
+  - [ ] `applyAttributesTableElements`
 
 This plugin will inline CSS from `<style>` tags into HTML `style` attributes.
 
