@@ -4,6 +4,7 @@ module.exports = {
     semi: 0,
     'comma-dangle': 0,
     'arrow-body-style': 0,
+    'object-curly-spacing': 0,
     'unicorn/filename-case': [
       'error',
       {
