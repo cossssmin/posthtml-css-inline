@@ -20,10 +20,9 @@ TODO:
 - [ ] Remove inlined classes from HTML elements?
 - Juice-compatible API
   - [ ] `resolveCSSVariables`
-  - [ ] `applyStyleTags`
-  - [ ] `applyAttributesTableElements`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
+  - [ ] `applyAttributesTableElements`
 
 This plugin will inline CSS from `<style>` tags into HTML `style` attributes.
 
