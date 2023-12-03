@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url'
 import test from 'ava'
 import posthtml from 'posthtml'
 import plugin from '../lib/index.js'
+import {normalizeNewline} from '../lib/utils.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -12,17 +13,17 @@ const expected = file => readFileSync(path.join(__dirname, 'expected', `${file}.
 
 // eslint-disable-next-line
 const error = (name, options, cb) => posthtml([plugin(options)]).process(fixture(name)).catch(cb)
-const clean = html => html.replaceAll(/[^\S\r\n]+$/gm, '').trim()
+const clean = html => normalizeNewline(html).replaceAll(/[^\S\r\n]+$/gm, '').trim()
 
 const process = (t, name, options, log = false) => {
   return posthtml([plugin(options)])
     .process(fixture(name))
     .then(result => log ? console.log(result.html) : clean(result.html))
-    .then(html => t.is(html, expected(name).trim()))
+    .then(html => t.is(clean(html), clean(expected(name))))
 }
 
 test('Plugin options', t => {
-  return process(t, 'options', {preserveImportant: true, posthtml: {recognizeNoValueAttribute: true}})
+  return process(t, 'options', {preserveImportant: true})
 })
 
 test('<style> in <head>', t => {
@@ -50,8 +51,8 @@ test('Preserves at-rules', t => {
   return process(t, 'at-rules')
 })
 
-test('Preserves inlined selectors', t => {
-  return process(t, 'preserve-inlined', {removeInlinedSelectors: false})
+test('Removes inlined selectors', t => {
+  return process(t, 'remove-inlined', {removeInlinedSelectors: true})
 })
 
 test('Works with existing inline styles', t => {

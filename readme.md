@@ -19,7 +19,7 @@ TODO:
 - [ ] Support `@import` rules?
 - [ ] Remove inlined classes from HTML elements?
 - [ ] Support PostCSS plugins
-- Juice-compatible options
+- [ ] Juice-compatible options
   - [ ] `resolveCSSVariables`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
@@ -93,8 +93,7 @@ Here are all available options, with their default values:
 {
   processLinkTags: false,
   preserveImportant: false,
-  removeEmptyStyleTags: true,
-  removeInlinedSelectors: true,
+  removeInlinedSelectors: false,
 }
 ```
 
@@ -177,14 +176,12 @@ posthtml([
 <p class="text-sm" style="font-size: 14px !important">small text</p>
 ```
 
-### `removeEmptyStyleTags`
+### `removeInlinedSelectors`
 
 Type: `boolean`\
-Default: `true`
+Default: `false`
 
-Whether to remove `<style>` tags that become empty after inlining.
-
-By default, the plugin removes each CSS selector that was inlined, which may result in empty `<style></style>` tags. Setting this to `false` will keep those tags in the output.
+Whether to remove selectors that were successfully inlined from the `<style>` tag.
 
 ```js
 import posthtml from'posthtml'
@@ -192,7 +189,7 @@ import inlineCss from'posthtml-inline-css'
 
 posthtml([
   inlineCss({
-    removeEmptyStyleTags: false
+    removeInlinedSelectors: true
   })
 ])
   .process(`
@@ -200,43 +197,11 @@ posthtml([
       .text-sm {
         font-size: 12px;
       }
-    </style>
 
-    <p class="text-sm">small text</p>
-  `)
-  .then(result => result.html)
-```
-
-Result:
-
-```html
-<style></style>
-
-<p class="text-sm" style="font-size: 12px">small text</p>
-```
-
-### `removeInlinedSelectors`
-
-Type: `boolean`\
-Default: `true`
-
-Whether to remove selectors that were successfully inlined from the `<style>` tag.
-
-Set this to `false` if you want to keep the original CSS in the `<style>` tag.
-
-```js
-import posthtml from'posthtml'
-import inlineCss from'posthtml-inline-css'
-
-posthtml([
-  inlineCss({
-    removeInlinedSelectors: false
-  })
-])
-  .process(`
-    <style>
-      .text-sm {
-        font-size: 12px;
+      @media (min-width: 640px) {
+        .text-sm {
+          font-size: 16px;
+        }
       }
     </style>
 
@@ -249,8 +214,10 @@ Result:
 
 ```html
 <style>
-  .text-sm {
-    font-size: 12px;
+  @media (min-width: 640px) {
+    .text-sm {
+      font-size: 16px;
+    }
   }
 </style>
 
