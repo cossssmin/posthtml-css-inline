@@ -23,7 +23,10 @@ const process = (t, name, options, log = false) => {
 }
 
 test('Plugin options', t => {
-  return process(t, 'options', {preserveImportant: true})
+  return process(t, 'options', {
+    preserveImportant: true,
+    recognizeNoValueAttribute: true,
+  })
 })
 
 test('<style> in <head>', t => {

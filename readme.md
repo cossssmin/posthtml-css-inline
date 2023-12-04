@@ -94,6 +94,7 @@ Here are all available options, with their default values:
   processLinkTags: false,
   preserveImportant: false,
   removeInlinedSelectors: false,
+  recognizeNoValueAttribute: false,
 }
 ```
 
@@ -222,6 +223,40 @@ Result:
 </style>
 
 <p class="text-sm" style="font-size: 12px">small text</p>
+```
+
+### `recognizeNoValueAttribute`
+
+Type: `boolean`\
+Default: `false`
+
+When set to `true`, attributes with no value will be rendered as `alt` instead of `alt=""`.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-inline-css'
+
+posthtml([
+  inlineCss({
+    recognizeNoValueAttribute: true
+  })
+])
+  .process(`
+    <style>
+      .text-sm {
+        font-size: 12px;
+      }
+    </style>
+
+    <img src="image.jpg" width="100" class="text-sm" alt="">
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<img src="image.jpg" width="100" class="text-sm" alt style="font-size: 12px">
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml
