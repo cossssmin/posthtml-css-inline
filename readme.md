@@ -9,15 +9,13 @@
   [![Downloads][npm-stats-shield]][npm-stats]
 </div>
 
-## About
-
 This is a work in progress. It's not ready for production and has not been published yet.
 
 TODO:
 
 - [x] Support `<link rel="stylesheet">` tags
 - [ ] Support `@import` rules?
-- [ ] Remove inlined classes from HTML elements?
+- [x] Remove inlined classes from HTML elements
 - [ ] Support PostCSS plugins
 - [ ] Juice-compatible options
   - [ ] `resolveCSSVariables`
@@ -25,7 +23,11 @@ TODO:
   - [ ] `applyWidthAttributes`
   - [ ] `applyAttributesTableElements`
 
-This plugin will inline CSS from `<style>` tags into HTML `style` attributes.
+---
+
+## About
+
+This plugin will inline CSS from `<style>` and `<link rel="stylesheet">` tags into HTML `style` attributes.
 
 Use cases:
 
@@ -182,7 +184,9 @@ posthtml([
 Type: `boolean`\
 Default: `false`
 
-Whether to remove selectors that were successfully inlined from the `<style>` tag.
+Whether to remove selectors that were successfully inlined from both the `<style>` tag(s) and from the HTML body.
+
+If a selector that has been inlined is also present inside an at-rule such as `@media`, its matching class name/id value will not be removed, since AtRules are always preserved.
 
 ```js
 import posthtml from'posthtml'
@@ -201,7 +205,7 @@ posthtml([
 
       @media (min-width: 640px) {
         .text-sm {
-          font-size: 16px;
+          font-size: 16px !important;
         }
       }
     </style>
@@ -217,7 +221,7 @@ Result:
 <style>
   @media (min-width: 640px) {
     .text-sm {
-      font-size: 16px;
+      font-size: 16px !important;
     }
   }
 </style>

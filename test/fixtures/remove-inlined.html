@@ -6,12 +6,22 @@
       font-size: 12px;
     }
 
-    .text-blue {
-      color: blue;
+    @media (min-width: 640px) {
+      .text-sm {
+        font-size: 16px;
+      }
     }
-  </style>
+    </style>
 </head>
 <body>
-  <div class="text-blue text-sm">text</div>
+  <style>
+    .text-gray {
+      color: gray;
+    }
+  </style>
+  <div class="text-gray text-sm">
+    <h1 class="text-gray text-sm keep-me">Title</h1>
+    <p class="text-gray">Subtitle</p>
+  </div>
 </body>
 </html>
