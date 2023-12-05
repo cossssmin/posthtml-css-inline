@@ -17,7 +17,9 @@ TODO:
 - [ ] Support `@import` rules?
 - [x] Remove inlined classes from HTML elements
 - [ ] Support PostCSS plugins
+- [ ] Safelist (selectors that should not be inlined)
 - [ ] Juice-compatible options
+  - [ ] `excludedProperties`
   - [ ] `resolveCSSVariables`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
@@ -55,6 +57,10 @@ Given something like this:
 
 ```html
 <style>
+  div {
+    color: red;
+  }
+
   @media (max-width: 600px) {
     .text-sm {
       font-size: 16px;
@@ -81,24 +87,19 @@ import inlineCss from'posthtml-inline-css'
 posthtml([
   inlineCss(options)
 ])
-  .process('[your HTML]')
+  .process('your HTML')
   .then(result => console.log(result.html))
 ```
 
 ## Options
 
-You may pass an object with options to the plugin.
+You may configure how inlining works by passing an options object to the plugin.
 
-Here are all available options, with their default values:
-
-```js
-{
-  processLinkTags: false,
-  preserveImportant: false,
-  removeInlinedSelectors: false,
-  recognizeNoValueAttribute: false,
-}
-```
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `processLinkTags` | `boolean` | `false` | Process `<link rel="stylesheet">` tags. |
+| `preserveImportant` | `boolean` | `false` | Preserve `!important` in the inlined CSS value. |
+| `removeInlinedSelectors` | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
 
 ### `processLinkTags`
 
@@ -184,9 +185,9 @@ posthtml([
 Type: `boolean`\
 Default: `false`
 
-Whether to remove selectors that were successfully inlined from both the `<style>` tag(s) and from the HTML body.
+Whether to remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body.
 
-If a selector that has been inlined is also present inside an at-rule such as `@media`, its matching class name/id value will not be removed, since AtRules are always preserved.
+If a selector that has been inlined is also present inside an at-rule such as `@media`, it will not be removed from the HTML body.
 
 ```js
 import posthtml from'posthtml'
@@ -227,40 +228,6 @@ Result:
 </style>
 
 <p class="text-sm" style="font-size: 12px">small text</p>
-```
-
-### `recognizeNoValueAttribute`
-
-Type: `boolean`\
-Default: `false`
-
-When set to `true`, attributes with no value will be rendered as `alt` instead of `alt=""`.
-
-```js
-import posthtml from'posthtml'
-import inlineCss from'posthtml-inline-css'
-
-posthtml([
-  inlineCss({
-    recognizeNoValueAttribute: true
-  })
-])
-  .process(`
-    <style>
-      .text-sm {
-        font-size: 12px;
-      }
-    </style>
-
-    <img src="image.jpg" width="100" class="text-sm" alt="">
-  `)
-  .then(result => result.html)
-```
-
-Result:
-
-```html
-<img src="image.jpg" width="100" class="text-sm" alt style="font-size: 12px">
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml
