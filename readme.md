@@ -17,6 +17,7 @@ TODO:
 - [ ] Support `@import` rules?
 - [x] Remove inlined classes from HTML elements
 - [ ] Support PostCSS plugins
+- [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector)[^1]  
 - [ ] Safelist (selectors that should not be inlined)
 - [ ] Juice-compatible options
   - [ ] `excludedProperties`
@@ -24,6 +25,8 @@ TODO:
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
   - [ ] `applyAttributesTableElements`
+
+[^1]: This needs to be implemented in PostHTML or [posthtml-match-helper](https://github.com/posthtml/posthtml-match-helper) first.
 
 ---
 
