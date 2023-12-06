@@ -16,7 +16,7 @@ TODO:
 - [x] Support `<link rel="stylesheet">` tags
 - [ ] Support `@import` rules?
 - [x] Remove inlined classes from HTML elements
-- [ ] Support PostCSS plugins
+- [x] Support PostCSS plugins
 - [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector) *
 - [ ] Safelist (selectors that should not be inlined)
 - [ ] Juice-compatible options
@@ -33,6 +33,8 @@ TODO:
 ## About
 
 This plugin will inline CSS from `<style>` and `<link rel="stylesheet">` tags into HTML `style` attributes.
+
+The CSS will be parsed with [PostCSS](https://postcss.org/), so you can use PostCSS plugins to transform the CSS before it's inlined.
 
 Use cases:
 
@@ -103,6 +105,7 @@ You may configure how inlining works by passing an options object to the plugin.
 | `processLinkTags` | `boolean` | `false` | Process `<link rel="stylesheet">` tags. |
 | `preserveImportant` | `boolean` | `false` | Preserve `!important` in the inlined CSS value. |
 | `removeInlinedSelectors` | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
+| `postcss` | `object` | `{}` | Object to configure PostCSS. |
 
 ### `processLinkTags`
 
@@ -226,6 +229,64 @@ Result:
   @media (min-width: 640px) {
     .text-sm {
       font-size: 16px !important;
+    }
+  }
+</style>
+
+<p class="text-sm" style="font-size: 12px">small text</p>
+```
+
+### `postcss`
+
+Type: `object`\
+Default: `{}`
+
+You may configure PostCSS and use PostCSS plugins to transform the CSS before it's inlined.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-inline-css'
+// Imaginary PostCSS plugin that removes !important
+import removeImportant from'remove-important-plugin'
+
+posthtml([
+  inlineCss({
+    postcss: {
+      plugins: [
+        removeImportant
+      ]
+    }
+  })
+])
+  .process(`
+    <style>
+      .text-sm {
+        font-size: 12px !important;
+      }
+
+      @media (min-width: 640px) {
+        .text-sm {
+          font-size: 16px !important;
+        }
+      }
+    </style>
+
+    <p class="text-sm">small text</p>
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<style>
+  .text-sm {
+    font-size: 12px;
+  }
+
+  @media (min-width: 640px) {
+    .text-sm {
+      font-size: 16px;
     }
   }
 </style>

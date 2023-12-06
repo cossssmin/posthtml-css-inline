@@ -5,6 +5,7 @@ import test from 'ava'
 import posthtml from 'posthtml'
 import plugin from '../lib/index.js'
 import {normalizeNewline} from '../lib/utils.js'
+import removeImportant from './stubs/_removeImportantPlugin.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -60,4 +61,14 @@ test('Removes inlined selectors', t => {
 
 test('Works with existing inline styles', t => {
   return process(t, 'existing-style-attr')
+})
+
+test('PostCSS plugins', t => {
+  return process(t, 'postcss-plugins', {
+    postcss: {
+      plugins: [
+        removeImportant,
+      ],
+    },
+  })
 })
