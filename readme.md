@@ -1,6 +1,6 @@
 <div align="center">
   <img width="150" height="150" alt="PostHTML" src="https://posthtml.github.io/posthtml/logo.svg">
-  <h1>PostHTML Inline CSS</h1>
+  <h1>PostHTML CSS Inline</h1>
   <p>PostHTML plugin for inlining CSS to HTML style attributes</p>
 
   [![Version][npm-version-shield]][npm]
