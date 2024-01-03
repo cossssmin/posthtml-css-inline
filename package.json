@@ -18,9 +18,15 @@
     "release": "np"
   },
   "keywords": [
+    "css",
     "html",
+    "inline",
     "posthtml",
-    "posthtml-plugin"
+    "posthtml-plugin",
+    "postcss-plugin"
+  ],
+  "files": [
+    "lib/**/*"
   ],
   "devDependencies": {
     "ava": "^6.0.1",
