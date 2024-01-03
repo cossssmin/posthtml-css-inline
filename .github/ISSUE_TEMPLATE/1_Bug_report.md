@@ -9,6 +9,6 @@ _Describe your problem._
 
 ## Environment
 
-- `posthtml-myplugin` plugin version: #.#.#
+- `posthtml-css-inline` plugin version: #.#.#
 - PostHTML version: #.#.#
 - Node.js version: #.#.#
