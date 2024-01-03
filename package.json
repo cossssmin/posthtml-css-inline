@@ -1,16 +1,16 @@
 {
-  "name": "posthtml-plugin-starter",
-  "description": "PostHTML plugin starter kit.",
+  "name": "posthtml-css-inline",
+  "description": "Inline CSS from HTML `<style>` tags into `style` attributes.",
   "version": "0.0.0",
   "license": "MIT",
-  "author": "PostHTML (https://github.com/posthtml)",
-  "bugs": "https://github.com/posthtml/posthtml-plugin-starter/issues",
-  "homepage": "https://github.com/posthtml/posthtml-plugin-starter",
-  "repository": "posthtml/posthtml-plugin-starter",
+  "author": "PostHTML (https://github.com/cossssmin)",
+  "bugs": "https://github.com/cossssmin/posthtml-css-inline/issues",
+  "homepage": "https://github.com/cossssmin/posthtml-css-inline",
+  "repository": "cossssmin/posthtml-css-inline",
   "type": "module",
   "exports": "./lib/index.js",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "test": "c8 ava",
