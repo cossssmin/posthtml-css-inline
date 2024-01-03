@@ -19,7 +19,7 @@ TODO:
 - [x] Support PostCSS plugins
 - [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector) *
 - [ ] Safelist (selectors that should not be inlined)
-- [ ] Remove orphaned selectors (see #7)
+- [ ] Remove [orphaned selectors](https://github.com/cossssmin/posthtml-css-inline/issues/7)
 - [ ] Juice-compatible options
   - [ ] `excludedProperties`
   - [ ] `resolveCSSVariables`
