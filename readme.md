@@ -9,7 +9,7 @@
   [![Downloads][npm-stats-shield]][npm-stats]
 </div>
 
-This is a work in progress. It's not ready for production and has not been published yet.
+This is a work in progress, it's not ready for production yet.
 
 TODO:
 
