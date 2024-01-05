@@ -40,7 +40,7 @@
     "postcss": "^8.4.32",
     "postcss-safe-parser": "^7.0.0",
     "posthtml-attrs-parser": "^0.1.1",
-    "posthtml-match-helper": "^1.0.3",
+    "posthtml-match-helper": "1.0.4-dev.0",
     "specificity": "^1.0.0"
   }
 }

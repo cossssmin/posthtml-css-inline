@@ -10,6 +10,10 @@
       color: blue;
     }
 
+    .\@container{
+      container-type: inline-size
+    }
+
     div {
       display: flex;
     }
@@ -17,9 +21,24 @@
     div {
       font-size: 14px !important;
     }
+
+    @media screen {
+      .sm\:w-1\/2 {
+        width: 50%;
+      }
+    }
+
+    @container (min-width: 17.5rem){
+      .\@\[17\.5rem\]\:underline{
+        text-decoration-line: underline
+      }
+    }
+
   </style>
 </head>
 <body>
-  <div class="text-blue text-sm" style="font-size: 14px; color: blue; display: flex">text</div>
+  <section class="@container" style="container-type: inline-size">
+    <div class="text-blue text-sm @[17.5rem]:underline sm:w-1/2" style="font-size: 14px; color: blue; display: flex"></div>
+  </section>
 </body>
 </html>
