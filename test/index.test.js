@@ -77,7 +77,7 @@ test('Safelist', () => {
   })
 })
 
-test.only('Skip inlining', () => {
+test('Skip inlining', () => {
   return process('skip', {
     removeInlinedSelectors: true,
   })
