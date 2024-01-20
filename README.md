@@ -14,7 +14,7 @@ This is a work in progress, it's not ready for production yet.
 TODO:
 
 - [x] Support `<link rel="stylesheet">` tags
-- [x] Remove inlined classes from HTML elements
+- [x] Remove inlined selectors from HTML elements
 - [x] Support PostCSS plugins
 - [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector) *
 - [x] Safelist (selectors that should not be inlined)
