@@ -19,7 +19,7 @@ TODO:
 - [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector) *
 - [x] Safelist (selectors that should not be inlined)
 - [ ] Remove [orphaned selectors](https://github.com/cossssmin/posthtml-css-inline/issues/7)
-- [ ] [Skip inlining](https://github.com/cossssmin/posthtml-css-inline/issues/9) on marked tags
+- [x] [Skip inlining](https://github.com/cossssmin/posthtml-css-inline/issues/9) on marked tags
 - [ ] Juice-compatible options
   - [ ] `excludedProperties`
   - [ ] `resolveCSSVariables`
@@ -103,11 +103,19 @@ You may configure how inlining works by passing an options object to the plugin.
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `processLinkTags` | `boolean` | `false` | Process `<link rel="stylesheet">` tags. |
-| `preserveImportant` | `boolean` | `false` | Preserve `!important` in the inlined CSS value. |
-| `removeInlinedSelectors` | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
-| `postcss` | `object` | `{}` | Object to configure PostCSS. |
-| `safelist` | `array` | `[]` | Array of selectors that should not be inlined. |
+| [`processLinkTags`](#processLinkTags) | `boolean` | `false` | Process `<link rel="stylesheet">` tags. |
+| [`preserveImportant`](#preserveimportant) | `boolean` | `false` | Preserve `!important` in the inlined CSS value. |
+| [`removeInlinedSelectors`](#removeinlinedselectors) | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
+| [`postcss`](#postcss) | `object` | `{}` | Object to configure PostCSS. |
+| [`safelist`](#safelist) | `array` | `[]` | Array of selectors that should not be inlined. |
+
+## Attributes
+
+You may configure how inlining works on a per-element basis.
+
+| Attribute | Description |
+| --- | --- |
+| [`no-inline`](#no-inline) | Skip inlining on this element. |
 
 ### `processLinkTags`
 
@@ -344,6 +352,73 @@ Result:
   <p class="flex" style="color: red">small text</p>
 </body>
 ```
+
+### `no-inline`
+
+You may use the `no-inline` attribute on an element to prevent CSS inlining.
+
+- when used on a `<style>` or `<link>` tag, the CSS inside the tag will not be inlined
+- when used on any other tag, the inliner will not inline CSS on that tag
+
+You may use any of the following attributes to achieve this on a `<style>` or `<link>` tag:
+
+- `no-inline`
+- `data-embed`
+- `embed`
+- `prevent-inline`
+- `skip-inline`
+
+Likewise, you may use any of the following attributes to achieve this on any other tag:
+
+- `no-inline`
+- `prevent-inline`
+- `skip-inline`
+
+The attribute will be removed from the tag in the resulting HTML.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-css-inline'
+
+posthtml([
+  inlineCss()
+])
+  .process(`
+    <style no-inline>
+      p {
+        font-size: 12px;
+      }
+    </style>
+    <style>
+      div {
+        color: blue;
+      }
+    </style>
+
+    <p>small text</p>
+    <div no-inline>b</div>
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<style>
+  p {
+    font-size: 12px;
+  }
+</style>
+<style>
+  div {
+    color: blue;
+  }
+</style>
+
+<p>small text</p>
+<div>b</div>
+```
+
 
 [npm]: https://www.npmjs.com/package/posthtml-css-inline
 [npm-version-shield]: https://img.shields.io/npm/v/posthtml-css-inline.svg
