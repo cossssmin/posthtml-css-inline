@@ -76,3 +76,9 @@ test('Safelist', () => {
     safelist: ['body', '.flex']
   })
 })
+
+test('Skip inlining', () => {
+  return process('skip', {
+    removeInlinedSelectors: true,
+  })
+})
