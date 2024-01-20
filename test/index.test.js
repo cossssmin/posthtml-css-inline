@@ -70,3 +70,9 @@ test('PostCSS plugins', () => {
     },
   })
 })
+
+test('Safelist', () => {
+  return process('safelist', {
+    safelist: ['body', '.flex']
+  })
+})

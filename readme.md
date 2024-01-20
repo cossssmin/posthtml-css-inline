@@ -18,7 +18,7 @@ TODO:
 - [x] Remove inlined classes from HTML elements
 - [x] Support PostCSS plugins
 - [ ] Support [complex selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_selectors/Selector_structure#complex_selector) *
-- [ ] Safelist (selectors that should not be inlined)
+- [x] Safelist (selectors that should not be inlined)
 - [ ] Remove [orphaned selectors](https://github.com/cossssmin/posthtml-css-inline/issues/7)
 - [ ] Juice-compatible options
   - [ ] `excludedProperties`
@@ -107,6 +107,7 @@ You may configure how inlining works by passing an options object to the plugin.
 | `preserveImportant` | `boolean` | `false` | Preserve `!important` in the inlined CSS value. |
 | `removeInlinedSelectors` | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
 | `postcss` | `object` | `{}` | Object to configure PostCSS. |
+| `safelist` | `array` | `[]` | Array of selectors that should not be inlined. |
 
 ### `processLinkTags`
 
@@ -293,6 +294,55 @@ Result:
 </style>
 
 <p class="text-sm" style="font-size: 12px">small text</p>
+```
+
+### `safelist`
+
+Type: `array`\
+Default: `[]`
+
+Array of selectors that should not be inlined.
+
+> [!NOTE]  
+> The CSS `*` selector is not supported when inlining, you don't need to worry about safelisting it.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-css-inline'
+
+posthtml([
+  inlineCss({
+    safelist: ['body', '.flex']
+  })
+])
+  .process(`
+    <style>
+      .flex {
+        display: flex;
+      }
+
+      body {
+        color: blue;
+      }
+
+      p {
+        color: red;
+      }
+    </style>
+
+    <body>
+      <p class="flex">small text</p>
+    </body>
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<body>
+  <p class="flex" style="color: red">small text</p>
+</body>
 ```
 
 [npm]: https://www.npmjs.com/package/posthtml-css-inline
