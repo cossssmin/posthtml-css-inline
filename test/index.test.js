@@ -82,3 +82,10 @@ test('Skip inlining', () => {
     removeInlinedSelectors: true,
   })
 })
+
+test('Remove orphaned selectors', () => {
+  return process('orphans', {
+    removeInlinedSelectors: true,
+    removeOrphanedSelectors: true,
+  })
+})
