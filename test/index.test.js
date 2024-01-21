@@ -82,3 +82,9 @@ test('Skip inlining', () => {
     removeInlinedSelectors: true,
   })
 })
+
+test('excludedProperties', () => {
+  return process('excluded-properties', {
+    excludedProperties: ['color', 'display'],
+  })
+})

@@ -20,7 +20,7 @@ TODO:
 - [x] Safelist (selectors that should not be inlined)
 - [x] [Skip inlining](https://github.com/cossssmin/posthtml-css-inline/issues/9) on marked tags
 - [ ] Juice-compatible options
-  - [ ] `excludedProperties`
+  - [x] `excludedProperties`
   - [ ] `resolveCSSVariables`
   - [ ] `applyHeightAttributes`
   - [ ] `applyWidthAttributes`
@@ -107,6 +107,7 @@ You may configure how inlining works by passing an options object to the plugin.
 | [`removeInlinedSelectors`](#removeinlinedselectors) | `boolean` | `false` | Remove selectors that were successfully inlined from both the `<style>` tag and from the HTML body. |
 | [`postcss`](#postcss) | `object` | `{}` | Object to configure PostCSS. |
 | [`safelist`](#safelist) | `array` | `[]` | Array of selectors that should not be inlined. |
+| [`excludedProperties`](#excludedproperties) | `array` | `[]` | Array of CSS properties that should not be inlined. |
 
 ## Attributes
 
@@ -350,6 +351,50 @@ Result:
 <body>
   <p class="flex" style="color: red">small text</p>
 </body>
+```
+
+### `excludedProperties`
+
+Type: `array`\
+Default: `[]`
+
+Array of CSS properties that should not be inlined.
+
+```js
+import posthtml from'posthtml'
+import inlineCss from'posthtml-css-inline'
+
+posthtml([
+  inlineCss({
+    excludedProperties: ['color', 'display']
+  })
+])
+  .process(`
+    <style>
+      p {
+        color: red;
+        display: flex;
+        font-size: 12px;
+      }
+    </style>
+
+    <p>text</p>
+  `)
+  .then(result => result.html)
+```
+
+Result:
+
+```html
+<style>
+  p {
+    color: red;
+    display: flex;
+    font-size: 12px;
+  }
+</style>
+
+<p style="font-size: 12px">text</p>
 ```
 
 ### `no-inline`
