@@ -2,7 +2,7 @@ import path from 'node:path'
 import {readFileSync} from 'node:fs'
 import {fileURLToPath} from 'node:url'
 import posthtml from 'posthtml'
-import {expect, test} from 'vitest'
+import {describe, expect, test} from 'vitest'
 import plugin from '../lib/index.js'
 import {normalizeNewline} from '../lib/utils.js'
 import removeImportant from './stubs/_removeImportantPlugin.js'
@@ -20,13 +20,6 @@ const process = (name, options, log = false) => {
     .then(html => expect(clean(html)).toBe(clean(expected(name))))
 }
 
-test('Plugin options', () => {
-  return process('options', {
-    preserveImportant: true,
-    recognizeNoValueAttribute: true,
-  })
-})
-
 test('<style> in <head>', () => {
   return process('style-in-head')
 })
@@ -35,46 +28,12 @@ test('<style> in <body>', () => {
   return process('style-in-body')
 })
 
-test('Local <link> tags', () => {
-  return process('link-local', {processLinkTags: true})
-})
-
-test('Remote <link> tags', () => {
-  return process('link-remote', {processLinkTags: true})
-})
-
-test('Remote <link> tags (fail)', async () => {
-  await expect(() => process('link-remote-reject', {processLinkTags: true}))
-    .rejects
-    .toThrowError()
-})
-
 test('Preserves at-rules', () => {
   return process('at-rules')
 })
 
-test('Removes inlined selectors', () => {
-  return process('remove-inlined', {removeInlinedSelectors: true})
-})
-
-test('Works with existing inline styles', () => {
+test('Existing inline styles', () => {
   return process('existing-style-attr')
-})
-
-test('PostCSS plugins', () => {
-  return process('postcss-plugins', {
-    postcss: {
-      plugins: [
-        removeImportant,
-      ],
-    },
-  })
-})
-
-test('Safelist', () => {
-  return process('safelist', {
-    safelist: ['body', '.flex']
-  })
 })
 
 test('Skip inlining', () => {
@@ -83,8 +42,55 @@ test('Skip inlining', () => {
   })
 })
 
-test('excludedProperties', () => {
-  return process('excluded-properties', {
-    excludedProperties: ['color', 'display'],
+test('Illegal values', () => {
+  return process('illegal-values')
+})
+
+describe('Options', () => {
+  test('Sanity check', () => {
+    return process('options', {
+      preserveImportant: true,
+      recognizeNoValueAttribute: true,
+    })
+  })
+
+  test('PostCSS plugins', () => {
+    return process('postcss-plugins', {
+      postcss: {
+        plugins: [
+          removeImportant,
+        ],
+      },
+    })
+  })
+
+  test('processLinkTags (local)', () => {
+    return process('link-local', {processLinkTags: true})
+  })
+
+  test('processLinkTags (remote)', () => {
+    return process('link-remote', {processLinkTags: true})
+  })
+
+  test('processLinkTags (remote, fail)', async () => {
+    await expect(() => process('link-remote-reject', {processLinkTags: true}))
+      .rejects
+      .toThrowError()
+  })
+
+  test('removeInlinedSelectors', () => {
+    return process('remove-inlined', {removeInlinedSelectors: true})
+  })
+
+  test('safelist', () => {
+    return process('safelist', {
+      safelist: ['body', '.flex']
+    })
+  })
+
+  test('excludedProperties', () => {
+    return process('excluded-properties', {
+      excludedProperties: ['color', 'display'],
+    })
   })
 })
