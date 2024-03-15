@@ -11,13 +11,20 @@
     }
   </style>
   <style>
-    div {
+    .blue {
       color: blue;
+    }
+    .inline {
+      display: inline;
+    }
+    #title {
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <p class="flex">a</p>
-  <div no-inline>b</div>
+  <p class="flex blue">a</p>
+  <div class="blue inline" no-inline>b</div>
+  <h1 id="title" no-inline>Title</h1>
 </body>
 </html>
